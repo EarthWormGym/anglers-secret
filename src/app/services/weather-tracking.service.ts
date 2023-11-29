@@ -17,7 +17,7 @@ export class WeatherTrackingService {
   getCurrentWeather(location: any) {
     const API_URL = `http://api.weatherapi.com/v1/current.json?key=45b8474fde374c41ac3134812232811&q=${location}&aqi=no`;
 
-    let weatherId = Math.floor(Math.random() * 10000);
+    const weatherId = Math.floor(Math.random() * 10000);
 
     return this.http.get<any>(API_URL).pipe(
       map((requestData) => this.mapWeather(weatherId, requestData)),
