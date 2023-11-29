@@ -1,1 +1,1 @@
-# TheFishingSpot - Full-stack - MongoDB + ExpressJS + Angular + Node + Bulma
+# AnglersSecret - Full-stack - MongoDB + ExpressJS + Angular + Node + Bulma
