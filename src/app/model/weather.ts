@@ -1,4 +1,17 @@
 export interface weather {
-    name: string,
-    region: string    
+    weatherId: number,
+        data: {
+        location: {
+            name: string,
+            region: string    
+            country: string
+        }
+        currentWeather: {
+            lastUpdated: string,
+            tempC: number,
+            tempF: number,
+            windMph: number,
+            windKph: number,
+        }
+    }
 }
