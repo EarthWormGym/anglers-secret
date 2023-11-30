@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { HomeComponent } from './pages/home/home.component';
 import { WeatherTrackerComponent } from './pages/weather-tracker/weather-tracker.component';
 import { LocationFormComponent } from './pages/weather-tracker/location-form/location-form.component';
 import { WeatherDisplayComponent } from './pages/weather-tracker/weather-display/weather-display.component';
+import { SignupComponent } from './pages/signup/signup.component';
+import { LoginComponent } from './pages/login/login.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,9 +23,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
+    NavbarComponent,
+    HomeComponent,
     WeatherTrackerComponent,
     LocationFormComponent,
-    WeatherDisplayComponent
+    WeatherDisplayComponent,
+    SignupComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

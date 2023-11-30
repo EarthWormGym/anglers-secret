@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container centered-content">
     <ng-container *ngIf="weatherData$ | async as weatherData">
       <mat-card>
         <mat-card-header>
@@ -13,7 +13,7 @@
           <h3><strong>Current Weather</strong></h3>
           <p>Last Updated: {{ weatherData.data.currentWeather.lastUpdated }}</p>
           <p>Temperature Celsius: {{ weatherData.data.currentWeather.tempC }}</p>
-          <p>Temperature Faranheight: {{ weatherData.data.currentWeather.tempF }}</p>
+          <p>Temperature Fahrenheight: {{ weatherData.data.currentWeather.tempF }}</p>
           <p>Wind Speed Mph: {{ weatherData.data.currentWeather.windMph }}</p>
           <p>Wind Speed Kph: {{ weatherData.data.currentWeather.windKph }}</p>
         </mat-card-content>
