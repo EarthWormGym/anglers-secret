@@ -13,9 +13,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
 
 import { WeatherTrackingService } from './services/weather-tracking.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -36,9 +33,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    MatInputModule,
-    MatButtonModule,
-    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [

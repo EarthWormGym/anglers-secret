@@ -1,13 +1,17 @@
-<div class="container centered-content">
+<div class="container">
     <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-        <label>Location:</label>
-        <mat-form-field>
-            <input matInput placeholder="Post Code" formControlName="location">
-            <mat-error *ngIf="submitted && locationForm.controls['location'].hasError('required')">
-                Location is <strong>required</strong>
-            </mat-error>
-        </mat-form-field>
+        <div class="field">
+            <label class="label">Location</label>
+            <div class="control">
+                <input class="input" type="text" placeholder="Post Code" formControlName="location">
+                <p class="help is-danger" *ngIf="submitted && locationForm.controls['location'].hasError('required')">
+                    Location is <strong>required</strong>
+                </p>
+            </div>
+        </div>
 
-        <button mat-raised-button color="primary" type="submit">Search</button>
+        <div class="control">
+            <button class="button is-primary" type="submit">Search</button>
+        </div>
     </form>
 </div>
