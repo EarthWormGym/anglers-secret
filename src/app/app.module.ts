@@ -13,9 +13,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WeatherTrackingService } from './services/weather-tracking.service';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ApiService } from './services/api.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule
   ],
   providers: [
-    WeatherTrackingService
+    WeatherTrackingService,
+    ApiService
   ],
   bootstrap: [AppComponent]
 })
