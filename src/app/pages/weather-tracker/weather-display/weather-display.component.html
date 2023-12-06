@@ -1,5 +1,5 @@
 <div class="container">
-  <ng-container *ngIf="weatherData$ | async as weatherData">
+  <ng-container *ngIf="currentWeatherData$ | async as weatherData">
       <div class="card">
           <header class="card-header">
               <p class="card-header-title">{{ weatherData.data.location.name }}</p>
@@ -12,11 +12,48 @@
                   <h3><strong>Current Weather</strong></h3>
                   <p>Last Updated: {{ weatherData.data.currentWeather.lastUpdated }}</p>
                   <p>Temperature Celsius: {{ weatherData.data.currentWeather.tempC }}</p>
-                  <p>Temperature Fahrenheit: {{ weatherData.data.currentWeather.tempF }}</p>
                   <p>Wind Speed Mph: {{ weatherData.data.currentWeather.windMph }}</p>
-                  <p>Wind Speed Kph: {{ weatherData.data.currentWeather.windKph }}</p>
+                  <p>Rain (mm): {{ weatherData.data.currentWeather.precipMm }} </p>
+                  <p>Cloud Cover: {{ weatherData.data.currentWeather.cloudCover }} </p>
+                  <p>UV index: {{ weatherData.data.currentWeather.uv }} </p>
               </div>
           </div>
       </div>
+  </ng-container>
+
+  <ng-container *ngIf="historicalWeatherData$ | async as weatherData">
+    <div class="card">
+        <header class="card-header">
+            <p class="card-header-title">{{ weatherData.data.location.name }}</p>
+            <p class="card-header-title">{{ weatherData.data.location.region }}</p>
+            <p class="card-header-title">{{ weatherData.data.location.country }}</p>
+        </header>
+
+        <div class="card-content">
+            <div class="content">
+                <h3><strong>Historical Weather</strong></h3>
+                    <p>Date: {{ weatherData.data.historicalWeather.date }}</p>
+                <h4><strong>Daily Average</strong></h4>
+                    <p>Temperature Celsius: {{ weatherData.data.historicalWeather.tempC }}</p>
+                    <p>UV index: {{ weatherData.data.historicalWeather.uv }}</p>
+                    <p>Rain (mm): {{ weatherData.data.historicalWeather.totalPrecipMm }}</p>
+                <h4><strong>Morning</strong></h4>
+                    <p>Cloud coverage: {{ weatherData.data.historicalWeather.morning.cloudCover }}</p>
+                    <p>Rain (mm): {{ weatherData.data.historicalWeather.morning.precipMm }}</p>
+                    <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.morning.windMph }}</p>
+                    <p>Humidity: {{ weatherData.data.historicalWeather.morning.humidity }}</p>
+                <h4><strong>Midday</strong></h4>
+                    <p>Cloud coverage: {{ weatherData.data.historicalWeather.midday.cloudCover }}</p>
+                    <p>Rain (mm): {{ weatherData.data.historicalWeather.midday.precipMm }}</p>
+                    <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.midday.windMph }}</p>
+                    <p>Humidity: {{ weatherData.data.historicalWeather.midday.humidity }}</p>
+                <h4><strong>Evening</strong></h4>
+                    <p>Cloud coverage: {{ weatherData.data.historicalWeather.evening.cloudCover }}</p>
+                    <p>Rain (mm): {{ weatherData.data.historicalWeather.evening.precipMm }}</p>
+                    <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.evening.windMph }}</p>
+                    <p>Humidity: {{ weatherData.data.historicalWeather.evening.humidity }}</p>
+            </div>
+        </div>
+    </div>
   </ng-container>
 </div>
