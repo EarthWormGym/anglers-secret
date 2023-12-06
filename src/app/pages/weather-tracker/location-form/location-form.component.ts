@@ -18,10 +18,12 @@ export class LocationFormComponent {
   constructor(private fb: FormBuilder, private weatherService: WeatherTrackingService) { }
 
   onSubmit() {
-    const location = this.locationForm.get('location')?.value;
-    this.weatherService.getCurrentWeather(location);
-    this.submitted = true;
-    this.locationForm.reset();
+    const location = this.locationForm.get('location');
+    if (location && location.value) {
+      this.weatherService.getCurrentWeather(location.value!);
+      this.submitted = true;
+      this.locationForm.reset();
+    }
   }
 
 }

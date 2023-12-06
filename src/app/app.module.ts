@@ -16,7 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WeatherTrackingService } from './services/weather-tracking.service';
-import { ApiService } from './services/api.service';
+import { LoginService } from './services/login.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,7 @@ import { ApiService } from './services/api.service';
   ],
   providers: [
     WeatherTrackingService,
-    ApiService
+    LoginService
   ],
   bootstrap: [AppComponent]
 })

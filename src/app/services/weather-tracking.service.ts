@@ -14,13 +14,9 @@ export class WeatherTrackingService {
 
   constructor(private http: HttpClient) { }
 
-  getCurrentWeather(location: any) {
-    const API_URL = `http://api.weatherapi.com/v1/current.json?key=45b8474fde374c41ac3134812232811&q=${location}&aqi=no`;
-
-    const weatherId = Math.floor(Math.random() * 10000);
-
-    return this.http.get<any>(API_URL).pipe(
-      map((requestData) => this.mapWeather(weatherId, requestData)),
+  getCurrentWeather(location: string) {
+    return this.http.get<any>(`/api/weather?location=${location}`).pipe(
+      map((requestData) => this.mapWeather(requestData)),
       catchError((error) => {
         console.error('Error fetching weather data:', error);
         return throwError(error);
@@ -31,9 +27,9 @@ export class WeatherTrackingService {
 
   }
 
-  private mapWeather(weatherId: number, requestData: any): weather {
+  private mapWeather(requestData: any): weather {
     return {
-      weatherId: weatherId,
+      weatherId: Math.floor(Math.random() * 10000),
       data: {
         location: {
           name: requestData.location.name,

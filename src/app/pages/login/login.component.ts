@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../../services/api.service';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -7,14 +7,10 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  api: ApiService;
+  _loginService: LoginService;
 
-  constructor(api: ApiService) { 
-    this.api = api;
-  }
-
-  login() {
-    this.api.loginCall();
+  constructor(_loginService: LoginService) { 
+    this._loginService = _loginService;
   }
 
 }
