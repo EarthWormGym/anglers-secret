@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { currentWeather } from '../model/currentWeather';
 import { historicalWeather } from '../model/historicalWeather';
-import { throwError, Subject } from 'rxjs';
+import { throwError, Subject, BehaviorSubject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -12,7 +12,8 @@ export class WeatherTrackingService {
 
   private currentWeatherDataSubject = new Subject<currentWeather>();
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
-  private historicalWeatherDataSubject = new Subject<historicalWeather>();
+  
+  private historicalWeatherDataSubject = new BehaviorSubject<historicalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -37,7 +38,8 @@ export class WeatherTrackingService {
         return throwError(error);
       })
     ).subscribe((weatherData: historicalWeather) => {
-      this.historicalWeatherDataSubject.next(weatherData);
+      const currentData = this.historicalWeatherDataSubject.value;
+      this.historicalWeatherDataSubject.next([...currentData, weatherData]);
     });
   };
 

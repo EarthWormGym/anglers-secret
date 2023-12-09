@@ -12,7 +12,7 @@ import { historicalWeather } from '../../../model/historicalWeather';
 export class WeatherDisplayComponent {
   private weatherTracker: WeatherTrackingService;
   public currentWeatherData$?: Observable<currentWeather>;
-  public historicalWeatherData$?: Observable<historicalWeather>;
+  public historicalWeatherData$?: Observable<Array<historicalWeather>>;
 
   constructor(weatherTracker: WeatherTrackingService) { 
     this.weatherTracker = weatherTracker;

@@ -35,6 +35,19 @@ html, body {
     height: 100%;
 }
 
+.card {
+    margin: 5px;
+
+    p {
+        margin-bottom: 0px !important;
+    }
+
+    h4 {
+        padding-top: 10px;
+        margin-bottom: 0px !important;
+    }
+}
+
 .container {
     display: flex;
     justify-content: center;
