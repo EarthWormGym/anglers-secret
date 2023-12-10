@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { currentWeather } from '../model/currentWeather';
 import { historicalWeather } from '../model/historicalWeather';
-import { throwError, Subject, BehaviorSubject } from 'rxjs';
+import { throwError, Subject, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
@@ -30,16 +30,26 @@ export class WeatherTrackingService {
     });
   };
 
-  getHistoricalWeather() {
-    return this.http.get<any>(`/api/weather/historical`).pipe(
+  getHistoricalWeather(date: string) {
+    return this.http.get<any>(`/api/weather/historical?date=${date}`).pipe(
       map((requestData) => this.mapHistoricalWeather(requestData)),
       catchError((error) => {
         console.error('Error fetching weather data:', error);
         return throwError(error);
       })
-    ).subscribe((weatherData: historicalWeather) => {
+    );
+  };
+
+  getMultipleHistoricalWeather(days: number) {
+    const requests = [];
+    for (let i = 1; i <= days; i++) {
+      const date = new Date();
+      date.setDate(date.getDate() - i);
+      requests.push(this.getHistoricalWeather(date.toISOString().split('T')[0]));
+    }
+    return forkJoin(requests).subscribe((weatherDataArray: historicalWeather[]) => {
       const currentData = this.historicalWeatherDataSubject.value;
-      this.historicalWeatherDataSubject.next([...currentData, weatherData]);
+      this.historicalWeatherDataSubject.next([...currentData, ...weatherDataArray]);
     });
   };
 

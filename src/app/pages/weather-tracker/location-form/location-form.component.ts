@@ -27,7 +27,7 @@ export class LocationFormComponent {
   }
 
   historicalWeather() {
-    this.weatherService.getHistoricalWeather();
+    this.weatherService.getMultipleHistoricalWeather(5);
   }
 
 }
