@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { WeatherTrackerComponent } from './pages/weather-tracker/weather-tracker.component';
-import { LocationFormComponent } from './pages/weather-tracker/location-form/location-form.component';
+import { WeatherTrackerFormComponent } from './pages/weather-tracker/weather-tracker-form/weather-tracker-form.component';
 import { WeatherDisplayComponent } from './pages/weather-tracker/weather-display/weather-display.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { LoginComponent } from './pages/login/login.component';
@@ -24,7 +24,7 @@ import { LoginService } from './services/login.service';
     NavbarComponent,
     HomeComponent,
     WeatherTrackerComponent,
-    LocationFormComponent,
+    WeatherTrackerFormComponent,
     WeatherDisplayComponent,
     SignupComponent,
     LoginComponent
