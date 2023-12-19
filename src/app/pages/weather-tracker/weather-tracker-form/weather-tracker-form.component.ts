@@ -23,7 +23,7 @@ export class WeatherTrackerFormComponent {
     const days = this.weatherTrackerForm.get('days');
     if (location && location.value && days && days.value) {
       this.weatherService.getCurrentWeather(location.value!);
-      this.weatherService.getMultipleHistoricalWeather(Number(days.value!));
+      this.weatherService.getMultipleHistoricalWeather(location.value!, Number(days.value!));
       this.submitted = true;
       this.weatherTrackerForm.reset();
     }
