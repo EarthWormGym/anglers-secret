@@ -46,7 +46,7 @@ export class WeatherTrackingService {
 
   getMultipleHistoricalWeather(location: string, days: number) {
     const requests = [];
-    for (let i = 1; i <= days; i++) {
+    for (let i = days; i >= 1; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
       requests.push(this.getHistoricalWeather(location, date.toISOString().split('T')[0]));
