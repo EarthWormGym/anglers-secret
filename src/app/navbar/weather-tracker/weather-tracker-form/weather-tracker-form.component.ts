@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { WeatherTrackingService } from '../../../services/weather-tracking.service';
+import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({

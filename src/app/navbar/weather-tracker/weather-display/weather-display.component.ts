@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { WeatherTrackingService } from '../../../services/weather-tracking.service';
+import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { Observable } from 'rxjs';
-import { currentWeather } from '../../../model/currentWeather';
-import { historicalWeather } from '../../../model/historicalWeather';
+import { currentWeather } from '../models/currentWeather';
+import { historicalWeather } from '../models/historicalWeather';
 
 @Component({
   selector: 'app-weather-display',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { currentWeather } from '../model/currentWeather';
-import { historicalWeather } from '../model/historicalWeather';
+import { currentWeather } from '../models/currentWeather';
+import { historicalWeather } from '../models/historicalWeather';
 import { throwError, Subject, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 

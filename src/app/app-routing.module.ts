@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './pages/home/home.component';
-import { WeatherTrackerComponent } from './pages/weather-tracker/weather-tracker.component';
-import { SignupComponent } from './pages/signup/signup.component';
-import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './navbar/home/home.component';
+import { WeatherTrackerComponent } from './navbar/weather-tracker/weather-tracker.component';
+import { SignupComponent } from './navbar/signup/signup.component';
+import { LoginComponent } from './navbar/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
