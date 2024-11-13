@@ -28,35 +28,21 @@
         <ng-container *ngIf="historicalWeatherData$ | async as weatherDataArray">
             <div class="card" *ngFor="let weatherData of weatherDataArray">
                 <header class="card-header">
-                    <p class="card-header-title">{{ weatherData.data.location.name }}</p>
-                    <p class="card-header-title">{{ weatherData.data.location.region }}</p>
-                    <p class="card-header-title">{{ weatherData.data.location.country }}</p>
+                    <p class="card-header-title">Date: {{ weatherData.data.historicalWeather.date }}</p>
                 </header>
 
 
                 <div class="card-content">
                     <div class="content">
-                        <h3><strong>Historical Weather</strong></h3>
-                            <p>Date: {{ weatherData.data.historicalWeather.date }}</p>
-                        <h4><strong>Daily Average</strong></h4>
+                        <h4><strong>Daily Averages</strong></h4>
                             <p>Temperature Celsius: {{ weatherData.data.historicalWeather.tempC }}</p>
                             <p>UV index: {{ weatherData.data.historicalWeather.uv }}</p>
                             <p>Rain (mm): {{ weatherData.data.historicalWeather.totalPrecipMm }}</p>
-                        <h4><strong>Morning</strong></h4>
-                            <p>Cloud coverage: {{ weatherData.data.historicalWeather.morning.cloudCover }}</p>
-                            <p>Rain (mm): {{ weatherData.data.historicalWeather.morning.precipMm }}</p>
-                            <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.morning.windMph }}</p>
-                            <p>Humidity: {{ weatherData.data.historicalWeather.morning.humidity }}</p>
                         <h4><strong>Midday</strong></h4>
                             <p>Cloud coverage: {{ weatherData.data.historicalWeather.midday.cloudCover }}</p>
                             <p>Rain (mm): {{ weatherData.data.historicalWeather.midday.precipMm }}</p>
                             <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.midday.windMph }}</p>
                             <p>Humidity: {{ weatherData.data.historicalWeather.midday.humidity }}</p>
-                        <h4><strong>Evening</strong></h4>
-                            <p>Cloud coverage: {{ weatherData.data.historicalWeather.evening.cloudCover }}</p>
-                            <p>Rain (mm): {{ weatherData.data.historicalWeather.evening.precipMm }}</p>
-                            <p>Wind Speed Mph: {{ weatherData.data.historicalWeather.evening.windMph }}</p>
-                            <p>Humidity: {{ weatherData.data.historicalWeather.evening.humidity }}</p>
                     </div>
                 </div>
             </div>

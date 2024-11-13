@@ -1,4 +1,4 @@
-export interface currentWeather {
+export interface CurrentWeather {
     weatherId: number,
         data: {
         location: {

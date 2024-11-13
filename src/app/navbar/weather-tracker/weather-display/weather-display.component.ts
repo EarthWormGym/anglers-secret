@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { Observable } from 'rxjs';
-import { currentWeather } from '../models/currentWeather';
-import { historicalWeather } from '../models/historicalWeather';
+import { CurrentWeather } from '../models/current-weather';
+import { HistoricalWeather } from '../models/historical-weather';
 
 @Component({
   selector: 'app-weather-display',
@@ -10,16 +10,14 @@ import { historicalWeather } from '../models/historicalWeather';
   styleUrl: './weather-display.component.scss'
 })
 export class WeatherDisplayComponent {
-  private weatherTracker: WeatherTrackingService;
-  public currentWeatherData$?: Observable<currentWeather>;
-  public historicalWeatherData$?: Observable<Array<historicalWeather>>;
 
-  constructor(weatherTracker: WeatherTrackingService) { 
-    this.weatherTracker = weatherTracker;
-  }
+  private weatherTrackerService = inject(WeatherTrackingService);
+
+  public currentWeatherData$?: Observable<CurrentWeather>;
+  public historicalWeatherData$?: Observable<Array<HistoricalWeather>>;
 
   ngOnInit() {
-    this.currentWeatherData$ = this.weatherTracker.currentWeatherData$;
-    this.historicalWeatherData$ = this.weatherTracker.historicalWeatherData$;
+    this.currentWeatherData$ = this.weatherTrackerService.currentWeatherData$;
+    this.historicalWeatherData$ = this.weatherTrackerService.historicalWeatherData$;
   }
 }

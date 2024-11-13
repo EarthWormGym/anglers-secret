@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { currentWeather } from '../models/currentWeather';
-import { historicalWeather } from '../models/historicalWeather';
+import { CurrentWeather } from '../models/current-weather';
+import { HistoricalWeather } from '../models/historical-weather';
 import { throwError, Subject, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
@@ -10,10 +10,10 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class WeatherTrackingService {
 
-  private currentWeatherDataSubject = new Subject<currentWeather>();
+  private currentWeatherDataSubject = new Subject<CurrentWeather>();
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
   
-  private historicalWeatherDataSubject = new BehaviorSubject<historicalWeather[]>([]);
+  private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
   constructor(private http: HttpClient) { }
@@ -25,7 +25,7 @@ export class WeatherTrackingService {
         console.error('Error fetching weather data:', error);
         return throwError(error);
       })
-    ).subscribe((weatherData: currentWeather) => {
+    ).subscribe((weatherData: CurrentWeather) => {
       this.currentWeatherDataSubject.next(weatherData);
     });
   };
@@ -51,13 +51,13 @@ export class WeatherTrackingService {
       date.setDate(date.getDate() - i);
       requests.push(this.getHistoricalWeather(location, date.toISOString().split('T')[0]));
     }
-    return forkJoin(requests).subscribe((weatherDataArray: historicalWeather[]) => {
+    return forkJoin(requests).subscribe((weatherDataArray: HistoricalWeather[]) => {
       const currentData = this.historicalWeatherDataSubject.value;
       this.historicalWeatherDataSubject.next([...currentData, ...weatherDataArray]);
     });
   };
 
-  private mapCurrentWeather(requestData: any): currentWeather {
+  private mapCurrentWeather(requestData: any): CurrentWeather {
     return {
       weatherId: Math.floor(Math.random() * 10000),
       data: {
@@ -75,10 +75,10 @@ export class WeatherTrackingService {
           uv: requestData.current.uv
         }
       }
-    } as currentWeather;
+    } as CurrentWeather;
   }
 
-  private mapHistoricalWeather(requestData: any): historicalWeather {
+  private mapHistoricalWeather(requestData: any): HistoricalWeather {
     return {
       weatherId: Math.floor(Math.random() * 10000),
       data: {
@@ -112,7 +112,7 @@ export class WeatherTrackingService {
           }
         }
       }
-    } as historicalWeather;
+    } as HistoricalWeather;
   }
 
 }

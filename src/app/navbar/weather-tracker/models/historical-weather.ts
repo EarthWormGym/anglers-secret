@@ -1,4 +1,4 @@
-export interface historicalWeather {
+export interface HistoricalWeather {
     weatherId: number,
         data: {
         location: {
