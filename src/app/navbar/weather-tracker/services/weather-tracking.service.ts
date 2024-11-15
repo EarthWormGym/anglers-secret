@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CurrentWeather } from '../models/current-weather';
 import { HistoricalWeather } from '../models/historical-weather';
@@ -9,47 +9,46 @@ import { catchError, map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class WeatherTrackingService {
+
+  private static readonly CURRENT_WEATHER_PATH = '/api/weather/current';
+  private static readonly HISTORICAL_WEATHER_PATH = '/api/weather/historical';
+
   private currentWeatherDataSubject = new Subject<CurrentWeather>();
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
 
-  private historicalWeatherDataSubject = new BehaviorSubject<
-    HistoricalWeather[]
-  >([]);
+  private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
+  private loadingWeatherDataSubject = new BehaviorSubject<boolean>(false);
+  loadingWeatherData$ = this.loadingWeatherDataSubject.asObservable();
+
+  private http = inject(HttpClient);
 
   getCurrentWeather(location: string) {
-    return this.http
-      .get<any>(`/api/weather/current?location=${location}`)
-      .pipe(
-        map((requestData) => this.mapCurrentWeather(requestData)),
-        catchError((error) => {
-          console.error('Error fetching weather data:', error);
-          return throwError(error);
-        }),
-      )
-      .subscribe((weatherData: CurrentWeather) => {
-        this.currentWeatherDataSubject.next(weatherData);
-      });
+    let params = new HttpParams();
+    params = params.set('location', location);
+
+    this.loadingWeatherDataSubject.next(true);
+    return this.http.get<any>(WeatherTrackingService.CURRENT_WEATHER_PATH, { params }).pipe(
+      map((requestData) => this.mapCurrentWeather(requestData)),
+    ).subscribe((weatherData: CurrentWeather) => {
+      this.currentWeatherDataSubject.next(weatherData);
+    });
   }
 
   getHistoricalWeather(location: string, date: string) {
     let params = new HttpParams();
-    params = params.append('location', location);
-    params = params.append('date', date);
+    params = params.set('location', location);
+    params = params.set('date', date);
 
-    return this.http.get<any>('/api/weather/historical', { params }).pipe(
-      map((requestData) => this.mapHistoricalWeather(requestData)),
-      catchError((error) => {
-        console.error('Error fetching weather data:', error);
-        return throwError(error);
-      }),
+    return this.http.get<any>(WeatherTrackingService.HISTORICAL_WEATHER_PATH, { params }).pipe(
+      map((requestData) => this.mapHistoricalWeather(requestData))
     );
   }
 
   getMultipleHistoricalWeather(location: string, days: number) {
     const requests = [];
+    
     for (let i = days; i >= 1; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
@@ -57,6 +56,7 @@ export class WeatherTrackingService {
         this.getHistoricalWeather(location, date.toISOString().split('T')[0]),
       );
     }
+
     return forkJoin(requests).subscribe(
       (weatherDataArray: HistoricalWeather[]) => {
         const currentData = this.historicalWeatherDataSubject.value;
