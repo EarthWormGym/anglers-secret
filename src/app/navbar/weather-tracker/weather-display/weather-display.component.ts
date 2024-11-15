@@ -7,10 +7,9 @@ import { HistoricalWeather } from '../models/historical-weather';
 @Component({
   selector: 'app-weather-display',
   templateUrl: './weather-display.component.html',
-  styleUrl: './weather-display.component.scss'
+  styleUrl: './weather-display.component.scss',
 })
 export class WeatherDisplayComponent {
-
   private weatherTrackerService = inject(WeatherTrackingService);
 
   public currentWeatherData$?: Observable<CurrentWeather>;

@@ -6,56 +6,67 @@ import { throwError, Subject, BehaviorSubject, forkJoin } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class WeatherTrackingService {
-
   private currentWeatherDataSubject = new Subject<CurrentWeather>();
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
-  
-  private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
+
+  private historicalWeatherDataSubject = new BehaviorSubject<
+    HistoricalWeather[]
+  >([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCurrentWeather(location: string) {
-    return this.http.get<any>(`/api/weather/current?location=${location}`).pipe(
-      map((requestData) => this.mapCurrentWeather(requestData)),
-      catchError((error) => {
-        console.error('Error fetching weather data:', error);
-        return throwError(error);
-      })
-    ).subscribe((weatherData: CurrentWeather) => {
-      this.currentWeatherDataSubject.next(weatherData);
-    });
-  };
+    return this.http
+      .get<any>(`/api/weather/current?location=${location}`)
+      .pipe(
+        map((requestData) => this.mapCurrentWeather(requestData)),
+        catchError((error) => {
+          console.error('Error fetching weather data:', error);
+          return throwError(error);
+        }),
+      )
+      .subscribe((weatherData: CurrentWeather) => {
+        this.currentWeatherDataSubject.next(weatherData);
+      });
+  }
 
   getHistoricalWeather(location: string, date: string) {
     let params = new HttpParams();
     params = params.append('location', location);
     params = params.append('date', date);
-  
-    return this.http.get<any>('/api/weather/historical', {params}).pipe(
+
+    return this.http.get<any>('/api/weather/historical', { params }).pipe(
       map((requestData) => this.mapHistoricalWeather(requestData)),
       catchError((error) => {
         console.error('Error fetching weather data:', error);
         return throwError(error);
-      })
+      }),
     );
-  };
+  }
 
   getMultipleHistoricalWeather(location: string, days: number) {
     const requests = [];
     for (let i = days; i >= 1; i--) {
       const date = new Date();
       date.setDate(date.getDate() - i);
-      requests.push(this.getHistoricalWeather(location, date.toISOString().split('T')[0]));
+      requests.push(
+        this.getHistoricalWeather(location, date.toISOString().split('T')[0]),
+      );
     }
-    return forkJoin(requests).subscribe((weatherDataArray: HistoricalWeather[]) => {
-      const currentData = this.historicalWeatherDataSubject.value;
-      this.historicalWeatherDataSubject.next([...currentData, ...weatherDataArray]);
-    });
-  };
+    return forkJoin(requests).subscribe(
+      (weatherDataArray: HistoricalWeather[]) => {
+        const currentData = this.historicalWeatherDataSubject.value;
+        this.historicalWeatherDataSubject.next([
+          ...currentData,
+          ...weatherDataArray,
+        ]);
+      },
+    );
+  }
 
   private mapCurrentWeather(requestData: any): CurrentWeather {
     return {
@@ -64,7 +75,7 @@ export class WeatherTrackingService {
         location: {
           name: requestData.location.name,
           region: requestData.location.region,
-          country: requestData.location.country
+          country: requestData.location.country,
         },
         currentWeather: {
           lastUpdated: requestData.current.last_updated,
@@ -72,9 +83,9 @@ export class WeatherTrackingService {
           windMph: requestData.current.wind_mph,
           precipMm: requestData.current.precip_mm,
           cloudCover: requestData.current.cloud,
-          uv: requestData.current.uv
-        }
-      }
+          uv: requestData.current.uv,
+        },
+      },
     } as CurrentWeather;
   }
 
@@ -85,7 +96,7 @@ export class WeatherTrackingService {
         location: {
           name: requestData.location.name,
           region: requestData.location.region,
-          country: requestData.location.country
+          country: requestData.location.country,
         },
         historicalWeather: {
           date: requestData.forecast.forecastday[0].date,
@@ -96,23 +107,22 @@ export class WeatherTrackingService {
             cloudCover: requestData.forecast.forecastday[0].hour[7].cloud,
             precipMm: requestData.forecast.forecastday[0].hour[7].precip_mm,
             windMph: requestData.forecast.forecastday[0].hour[7].wind_mph,
-            humidity: requestData.forecast.forecastday[0].hour[7].humidity
+            humidity: requestData.forecast.forecastday[0].hour[7].humidity,
           },
           midday: {
             cloudCover: requestData.forecast.forecastday[0].hour[12].cloud,
             precipMm: requestData.forecast.forecastday[0].hour[12].precip_mm,
             windMph: requestData.forecast.forecastday[0].hour[12].wind_mph,
-            humidity: requestData.forecast.forecastday[0].hour[12].humidity
+            humidity: requestData.forecast.forecastday[0].hour[12].humidity,
           },
           evening: {
             cloudCover: requestData.forecast.forecastday[0].hour[18].cloud,
             precipMm: requestData.forecast.forecastday[0].hour[18].precip_mm,
             windMph: requestData.forecast.forecastday[0].hour[18].wind_mph,
-            humidity: requestData.forecast.forecastday[0].hour[18].humidity
-          }
-        }
-      }
+            humidity: requestData.forecast.forecastday[0].hour[18].humidity,
+          },
+        },
+      },
     } as HistoricalWeather;
   }
-
 }

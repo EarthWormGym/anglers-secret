@@ -27,19 +27,16 @@ import { LoginService } from './navbar/login/services/login.service';
     WeatherTrackerFormComponent,
     WeatherDisplayComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
-  providers: [
-    WeatherTrackingService,
-    LoginService
-  ],
-  bootstrap: [AppComponent]
+  providers: [WeatherTrackingService, LoginService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

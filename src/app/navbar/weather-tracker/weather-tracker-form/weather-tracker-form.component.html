@@ -1,26 +1,32 @@
 <div class="tracker-form-container">
-    <form [formGroup]="weatherTrackerForm" (ngSubmit)="onSubmit()">
-        <div class="field">
-            <label class="label">Location</label>
-            <div class="control">
-                <input class="input" type="text" placeholder="Post Code" formControlName="location">
-                <p class="help is-danger" *ngIf="submitted && weatherTrackerForm.controls['location'].hasError('required')">
-                    Location is <strong>required</strong>
-                </p>
-            </div>
-            <label class="label">Historical Weather</label>
-            <div class="control">
-                <select class="input" formControlName="days">
-                    <option *ngFor="let day of [1, 2, 3, 4, 5, 6, 7]" [value]="day">{{day}}</option>
-                </select>
-                <p class="help is-danger" *ngIf="submitted && weatherTrackerForm.controls['days'].hasError('required')">
-                    Days is <strong>required</strong>
-                </p>
-            </div>
-        </div>
-
-        <div class="control">
-            <button class="button is-primary" type="submit">Search</button>
-        </div>
-    </form>
+  <form [formGroup]="weatherTrackerForm" (ngSubmit)="onSubmit()">
+    <div class="field">
+      <label class="label">Location</label>
+      <div class="control">
+        <input
+          class="input"
+          type="text"
+          placeholder="Post Code"
+          formControlName="location"
+        />
+        @if (submitted && weatherTrackerForm.controls["location"].hasError("required")) {
+          <p class="help is-danger">Location is <strong>required</strong></p>
+        }
+      </div>
+      <label class="label">Historical Weather</label>
+      <div class="control">
+        <select class="input" formControlName="days">
+          @for (day of [1, 2, 3, 4, 5, 6, 7]; track day) {
+            <option [value]="day">{{ day }}</option>
+          }
+        </select>
+        @if (submitted && weatherTrackerForm.controls["days"].hasError("required")) {
+          <p class="help is-danger">Days is <strong>required</strong></p>
+        }
+      </div>
+    </div>
+    <div class="control">
+      <button class="button is-primary" type="submit">Search</button>
+    </div>
+  </form>
 </div>
