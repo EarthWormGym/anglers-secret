@@ -11,32 +11,25 @@ import { LoginComponent } from './navbar/login/login.component';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { WeatherTrackingService } from './navbar/weather-tracker/services/weather-tracking.service';
 import { LoginService } from './navbar/login/services/login.service';
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    HomeComponent,
-    WeatherTrackerComponent,
-    WeatherTrackerFormComponent,
-    WeatherDisplayComponent,
-    SignupComponent,
-    LoginComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [WeatherTrackingService, LoginService],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        NavbarComponent,
+        HomeComponent,
+        WeatherTrackerComponent,
+        WeatherTrackerFormComponent,
+        WeatherDisplayComponent,
+        SignupComponent,
+        LoginComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule], providers: [WeatherTrackingService, LoginService, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule {}
