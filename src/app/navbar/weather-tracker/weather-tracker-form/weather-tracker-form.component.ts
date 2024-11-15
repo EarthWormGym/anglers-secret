@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-weather-tracker-form',
-  templateUrl: './weather-tracker-form.component.html',
-  styleUrl: './weather-tracker-form.component.scss',
+    selector: 'app-weather-tracker-form',
+    templateUrl: './weather-tracker-form.component.html',
+    styleUrl: './weather-tracker-form.component.scss',
+    standalone: true,
+    imports: [ReactiveFormsModule],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeatherTrackerFormComponent {
   submitted = false;
