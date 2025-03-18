@@ -1,26 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
-import { Observable } from 'rxjs';
-import { CurrentWeather } from '../models/current-weather';
-import { HistoricalWeather } from '../models/historical-weather';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-weather-display',
     templateUrl: './weather-display.component.html',
     styleUrl: './weather-display.component.scss',
     standalone: true,
-    imports: [AsyncPipe],
+    imports: [
+      CommonModule,
+      AsyncPipe
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WeatherDisplayComponent {
-  private weatherTrackerService = inject(WeatherTrackingService);
 
-  public currentWeatherData$?: Observable<CurrentWeather>;
-  public historicalWeatherData$?: Observable<Array<HistoricalWeather>>;
+  public weatherTrackerService = inject(WeatherTrackingService);
 
-  ngOnInit() {
-    this.currentWeatherData$ = this.weatherTrackerService.currentWeatherData$;
-    this.historicalWeatherData$ = this.weatherTrackerService.historicalWeatherData$;
-  }
 }

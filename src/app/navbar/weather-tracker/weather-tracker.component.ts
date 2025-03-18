@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { WeatherTrackerFormComponent } from './weather-tracker-form/weather-tracker-form.component';
 import { WeatherDisplayComponent } from './weather-display/weather-display.component';
+import { WeatherTrackingService } from './services/weather-tracking.service';
 
 @Component({
     selector: 'app-weather-tracker',
@@ -10,4 +12,8 @@ import { WeatherDisplayComponent } from './weather-display/weather-display.compo
     imports: [WeatherTrackerFormComponent, WeatherDisplayComponent],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WeatherTrackerComponent {}
+export class WeatherTrackerComponent {
+
+    weatherTrackingService = inject(WeatherTrackingService);
+
+}

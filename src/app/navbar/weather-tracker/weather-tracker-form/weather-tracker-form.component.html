@@ -9,7 +9,7 @@
           placeholder="Post Code"
           formControlName="location"
         />
-        @if (submitted && weatherTrackerForm.controls["location"].hasError("required")) {
+        @if (submitted() && weatherTrackerForm.controls["location"].hasError("required")) {
           <p class="help is-danger">Location is <strong>required</strong></p>
         }
       </div>
@@ -20,7 +20,7 @@
             <option [value]="day">{{ day }}</option>
           }
         </select>
-        @if (submitted && weatherTrackerForm.controls["days"].hasError("required")) {
+        @if (submitted() && weatherTrackerForm.controls["days"].hasError("required")) {
           <p class="help is-danger">Days is <strong>required</strong></p>
         }
       </div>

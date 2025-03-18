@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { forkJoin, last, switchMap } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-weather-tracker-form',
@@ -10,31 +12,32 @@ import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
     imports: [ReactiveFormsModule],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class WeatherTrackerFormComponent {
-  submitted = false;
+export class WeatherTrackerFormComponent implements OnInit {
 
-  //Initialize form here due to strict property initialization
-  weatherTrackerForm = this.fb.group({
-    location: ['', Validators.required],
-    days: ['', Validators.required],
-  });
+  private fb = inject(FormBuilder);
+  private weatherService = inject(WeatherTrackingService);
+  private destroyRef = inject(DestroyRef);
 
-  constructor(
-    private fb: FormBuilder,
-    private weatherService: WeatherTrackingService,
-  ) {}
+  submitted = signal<boolean>(false);
+
+  weatherTrackerForm: FormGroup = new FormGroup({});
+
+  ngOnInit(): void {
+    this.weatherTrackerForm = this.fb.group({
+      location: ['', Validators.required],
+      days: ['', Validators.required],
+    });
+  }
 
   onSubmit() {
+    this.weatherService.loadingWeatherData.set(true);
     const location = this.weatherTrackerForm.get('location');
     const days = this.weatherTrackerForm.get('days');
     if (location && location.value && days && days.value) {
-      this.weatherService.getCurrentWeather(location.value!);
-      this.weatherService.getMultipleHistoricalWeather(
-        location.value!,
-        Number(days.value!),
-      );
-      this.submitted = true;
-      this.weatherTrackerForm.reset();
+      this.weatherService.getMultipleHistoricalWeather(location.value!, Number(days.value!)).pipe(
+        switchMap(async () => this.weatherService.getCurrentWeather(location.value))
+      ).subscribe();
+      this.submitted.set(true);
     }
   }
 }

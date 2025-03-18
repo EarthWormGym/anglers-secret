@@ -1,4 +1,7 @@
 <div class="weather-tracker-container">
-  <app-weather-tracker-form></app-weather-tracker-form>
-  <app-weather-display></app-weather-display>
+  @if (!weatherTrackingService.displayWeatherData()) {
+    <app-weather-tracker-form></app-weather-tracker-form>
+  } @else {
+    <app-weather-display></app-weather-display>
+  }
 </div>

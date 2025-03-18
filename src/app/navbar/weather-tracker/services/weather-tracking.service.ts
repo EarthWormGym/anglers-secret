@@ -1,9 +1,9 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CurrentWeather } from '../models/current-weather';
 import { HistoricalWeather } from '../models/historical-weather';
-import { throwError, Subject, BehaviorSubject, forkJoin } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -13,30 +13,49 @@ export class WeatherTrackingService {
   private static readonly CURRENT_WEATHER_PATH = '/api/weather/current';
   private static readonly HISTORICAL_WEATHER_PATH = '/api/weather/historical';
 
-  private currentWeatherDataSubject = new Subject<CurrentWeather>();
+  private currentWeatherDataSubject = new BehaviorSubject<CurrentWeather | null>(null);
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
 
   private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
-  private loadingWeatherDataSubject = new BehaviorSubject<boolean>(false);
-  loadingWeatherData$ = this.loadingWeatherDataSubject.asObservable();
+  loadingWeatherData = signal<boolean>(false);
+  displayWeatherData = signal<boolean>(false);
 
   private http = inject(HttpClient);
 
   getCurrentWeather(location: string) {
-    let params = new HttpParams();
-    params = params.set('location', location);
+    let params = new HttpParams().set('location', location);
 
-    this.loadingWeatherDataSubject.next(true);
     return this.http.get<any>(WeatherTrackingService.CURRENT_WEATHER_PATH, { params }).pipe(
       map((requestData) => this.mapCurrentWeather(requestData)),
-    ).subscribe((weatherData: CurrentWeather) => {
-      this.currentWeatherDataSubject.next(weatherData);
+    ).subscribe({
+      next: (weatherData: CurrentWeather) => {
+        this.currentWeatherDataSubject.next(weatherData);
+      },
+      complete: () => {
+        this.loadingWeatherData.set(false);
+        this.displayWeatherData.set(true);
+      }
     });
   }
 
-  getHistoricalWeather(location: string, date: string) {
+  getMultipleHistoricalWeather(location: string, days: number): Observable<HistoricalWeather[]> {
+    const requests = Array.from({ length: days }, (_, i) => {
+      const date = new Date();
+      date.setDate(date.getDate() - (i + 1));
+      return this.getHistoricalWeather(location, date.toISOString().split('T')[0]);
+    });
+  
+    return forkJoin(requests).pipe(
+      tap((weatherDataArray: HistoricalWeather[]) => {
+        const currentData = this.historicalWeatherDataSubject.value || [];
+        this.historicalWeatherDataSubject.next([...currentData, ...weatherDataArray]);
+      })
+    );
+  }
+
+  private getHistoricalWeather(location: string, date: string) {
     let params = new HttpParams();
     params = params.set('location', location);
     params = params.set('date', date);
@@ -45,29 +64,7 @@ export class WeatherTrackingService {
       map((requestData) => this.mapHistoricalWeather(requestData))
     );
   }
-
-  getMultipleHistoricalWeather(location: string, days: number) {
-    const requests = [];
-    
-    for (let i = days; i >= 1; i--) {
-      const date = new Date();
-      date.setDate(date.getDate() - i);
-      requests.push(
-        this.getHistoricalWeather(location, date.toISOString().split('T')[0]),
-      );
-    }
-
-    return forkJoin(requests).subscribe(
-      (weatherDataArray: HistoricalWeather[]) => {
-        const currentData = this.historicalWeatherDataSubject.value;
-        this.historicalWeatherDataSubject.next([
-          ...currentData,
-          ...weatherDataArray,
-        ]);
-      },
-    );
-  }
-
+  
   private mapCurrentWeather(requestData: any): CurrentWeather {
     return {
       weatherId: Math.floor(Math.random() * 10000),
