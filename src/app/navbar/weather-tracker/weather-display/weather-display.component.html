@@ -1,4 +1,9 @@
 <div class="view-container">
+  <div class="back-btn-container">
+    <button class="button button is-light back-btn" (click)="onBack()">
+      <strong>Back</strong>
+    </button>
+  </div>
   <div class="container">
     @if (weatherTrackerService.currentWeatherData$ | async; as weatherData) {
       <div class="card">
