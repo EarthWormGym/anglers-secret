@@ -1,5 +1,5 @@
 export interface HistoricalWeather {
-  weatherId: number;
+  weatherId: string;
   data: {
     location: {
       name: string;

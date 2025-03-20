@@ -4,6 +4,7 @@ import { CurrentWeather } from '../models/current-weather';
 import { HistoricalWeather } from '../models/historical-weather';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root',
@@ -67,7 +68,7 @@ export class WeatherTrackingService {
   
   private mapCurrentWeather(requestData: any): CurrentWeather {
     return {
-      weatherId: Math.floor(Math.random() * 10000),
+      weatherId: uuidv4(),
       data: {
         location: {
           name: requestData.location.name,
@@ -88,7 +89,7 @@ export class WeatherTrackingService {
 
   private mapHistoricalWeather(requestData: any): HistoricalWeather {
     return {
-      weatherId: Math.floor(Math.random() * 10000),
+      weatherId: uuidv4(),
       data: {
         location: {
           name: requestData.location.name,

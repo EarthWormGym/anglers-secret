@@ -1,5 +1,5 @@
 export interface CurrentWeather {
-  weatherId: number;
+  weatherId: string;
   data: {
     location: {
       name: string;
