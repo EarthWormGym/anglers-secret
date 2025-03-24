@@ -1,4 +1,6 @@
-export interface CurrentWeather {
+import { v4 as uuidv4 } from 'uuid';
+
+export class CurrentWeather {
   weatherId: string;
   data: {
     location: {
@@ -15,4 +17,23 @@ export interface CurrentWeather {
       uv: number;
     };
   };
+
+  constructor(requestData: any) {
+    this.weatherId = uuidv4();
+    this.data = {
+      location: {
+        name: requestData.location.name,
+        region: requestData.location.region,
+        country: requestData.location.country,
+      },
+      currentWeather: {
+        lastUpdated: requestData.current.last_updated,
+        tempC: requestData.current.temp_c,
+        windMph: requestData.current.wind_mph,
+        precipMm: requestData.current.precip_mm,
+        cloudCover: requestData.current.cloud,
+        uv: requestData.current.uv,
+      },
+    };
+  }
 }
