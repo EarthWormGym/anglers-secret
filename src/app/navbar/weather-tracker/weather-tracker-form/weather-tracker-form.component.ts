@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
-import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs';
 
 @Component({
@@ -17,6 +17,9 @@ export class WeatherTrackerFormComponent implements OnInit {
   private weatherService = inject(WeatherTrackingService);
 
   weatherTrackerForm: FormGroup = new FormGroup({});
+  locationControl: FormControl = new FormControl('', Validators.required);
+  daysControl: FormControl = new FormControl('', Validators.required);
+
   days = [1, 2, 3, 4, 5, 6, 7];
 
   ngOnInit(): void {
@@ -25,8 +28,8 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   constructForm() {
     this.weatherTrackerForm = this.fb.group({
-      location: ['', Validators.required],
-      days: ['', Validators.required],
+      location: this.locationControl,
+      days: this.daysControl
     });
   }
 
