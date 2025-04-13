@@ -18,9 +18,6 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   weatherTrackerForm: FormGroup = new FormGroup({});
   locationControl: FormControl = new FormControl('', Validators.required);
-  daysControl: FormControl = new FormControl('', Validators.required);
-
-  days = [1, 2, 3, 4, 5, 6, 7];
 
   ngOnInit(): void {
     this.constructForm();
@@ -28,19 +25,30 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   constructForm() {
     this.weatherTrackerForm = this.fb.group({
-      location: this.locationControl,
-      days: this.daysControl
+      location: this.locationControl
     });
   }
 
   onSubmit() {
     this.weatherService.loadingWeatherData.set(true);
+  
     const location = this.weatherTrackerForm.get('location')?.value;
-    const days = this.weatherTrackerForm.get('days')?.value;
-    if (location && days) {
-      this.weatherService.getMultipleHistoricalWeather(location, Number(days)).pipe(
-        switchMap(async () => this.weatherService.getCurrentWeather(location))
-      ).subscribe();
-    }
+    if (!location) return;
+  
+    this.weatherService.getMultipleHistoricalWeather(location, 5).pipe(
+      switchMap(() => this.weatherService.getCurrentWeather(location)),
+      switchMap(() => this.weatherService.getAllFishingReadiness())
+    ).subscribe({
+      next: (readinessBySpecies) => {
+        this.weatherService.fishReadiness.set(readinessBySpecies);
+        this.weatherService.loadingWeatherData.set(false);
+        this.weatherService.displayWeatherData.set(true);
+      },
+      error: (err) => {
+        console.error(err);
+        this.weatherService.loadingWeatherData.set(false);
+      }
+    });
   }
+  
 }

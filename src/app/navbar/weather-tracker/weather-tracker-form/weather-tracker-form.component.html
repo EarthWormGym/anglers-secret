@@ -13,17 +13,6 @@
           <span class="help is-danger">Location is <strong>required</strong></span>
         }
       </div>
-      <label class="label">Historical Weather</label>
-      <div class="control">
-        <select class="input" formControlName="days" (blur)="daysControl.markAsTouched()">
-          @for (day of days; track day) {
-            <option [value]="day">{{ day }}</option>
-          }
-        </select>
-        @if (daysControl.invalid && (daysControl.dirty || daysControl.touched)) {
-          <span class="help is-danger">Days is <strong>required</strong></span>
-        }
-      </div>
     </div>
     <div class="control">
       <button class="button is-primary" type="submit" [disabled]="weatherTrackerForm.invalid">Search</button>

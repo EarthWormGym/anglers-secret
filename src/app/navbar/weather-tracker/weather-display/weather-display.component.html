@@ -35,6 +35,31 @@
         </div>
       </div>
     }
+    @if (this.weatherTrackerService.fishReadiness()) {
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title">Fish Stability</p>
+        </header>
+
+        <div class="card-content">
+          <div class="content">
+            <p>
+              {{ 'Pike - ' + this.weatherTrackerService.fishReadiness()?.pike }}
+            </p>
+            <p>
+              {{ 'Perch - ' + this.weatherTrackerService.fishReadiness()?.perch }}
+            </p>
+            <p>
+              {{ 'Trout - ' + this.weatherTrackerService.fishReadiness()?.trout }}
+            </p>
+            <p>
+              {{ 'Bass - ' + this.weatherTrackerService.fishReadiness()?.bass }}
+            </p>
+          </div>
+        </div>
+      </div>
+    }
+    
   </div>
 
   <div class="container">
