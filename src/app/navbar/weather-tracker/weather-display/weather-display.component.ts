@@ -17,6 +17,19 @@ export class WeatherDisplayComponent {
 
   public weatherTrackerService = inject(WeatherTrackingService);
 
+  getStabilityLabel(status: 'good' | 'caution' | 'poor'): string {
+    switch (status) {
+      case 'good':
+        return '- Biting';
+      case 'caution':
+        return '- Cautious';
+      case 'poor':
+        return '- Inactive';
+      default:
+        return '';
+    }
+  }
+
   onBack() {
     window.location.reload();
   }

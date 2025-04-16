@@ -41,32 +41,48 @@
           <p class="card-header-title fish-stability-header">Fish Stability</p>
         </header>
 
-        <div class="card-content">
+        <div class="card-content fish-content-container">
           <div class="content">
             <div class="fish-content">
               <img src="../../assets/pike-icon.png"/>
-              <span class="fish-name">
-                {{ 'Pike - ' + this.weatherTrackerService.fishStability()?.pike }}
+              <span
+                class="fish-name"
+                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.pike"
+              >
+                Pike {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.pike || 'caution') }}
               </span>
             </div>
+            
             <div class="fish-content">
               <img src="../../assets/perch-icon.png"/>
-              <span class="fish-name">
-                {{ 'Perch - ' + this.weatherTrackerService.fishStability()?.perch }}
+              <span
+                class="fish-name"
+                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.perch"
+              >
+                Perch {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.perch || 'caution') }}
               </span>
             </div>
+            
             <div class="fish-content">
               <img src="../../assets/trout-icon.png"/>
-              <span class="fish-name">
-                {{ 'Trout - ' + this.weatherTrackerService.fishStability()?.trout }}
+              <span
+                class="fish-name"
+                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.trout"
+              >
+                Trout {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.trout || 'caution') }}
               </span>
             </div>
+            
             <div class="fish-content">
               <img src="../../assets/bass-icon.png"/>
-              <span class="fish-name">
-                {{ 'Bass - ' + this.weatherTrackerService.fishStability()?.bass }}
+              <span
+                class="fish-name"
+                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.bass"
+              >
+                Bass {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.bass || 'caution') }}
               </span>
             </div>
+            
           </div>
         </div>
       </div>

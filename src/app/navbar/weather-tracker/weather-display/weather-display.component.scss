@@ -10,20 +10,50 @@
 }
 
 .fish-stability-card {
-  width: 671px !important;
+  width: 300px !important;
   height: 283px !important;
   .fish-stability-header {
     justify-content: center;
   }
-  .fish-content {
-    display: flex;
-    align-items: center;
-    height: 50px;
-    width: 300px;
-    gap: 20px;
-    img {
-      height: 60px;
-      width: 60px;
+  .fish-content-container {
+    padding: 12px !important;
+    margin-left: 24px;
+    .fish-content {
+      display: flex;
+      align-items: center;
+      height: 50px;
+      width: 300px;
+      gap: 20px;
+      img {
+        height: 60px;
+        width: 60px;
+      }
     }
   }
 }
+
+.fish-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+  padding: 4px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+}
+
+.stability-good {
+  background-color: #e7fbe7;
+  color: #2e7d32;
+}
+
+.stability-caution {
+  background-color: #fffbe6;
+  color: #8a6d1d;
+}
+
+.stability-poor {
+  background-color: #fde7e7;
+  color: #b71c1c;
+}
+
