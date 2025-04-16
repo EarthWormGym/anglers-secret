@@ -1,12 +1,12 @@
 export enum FishSpecies {
-  Pike = 'pike',
-  Perch = 'perch',
-  Bass = 'bass',
-  Trout = 'trout',
+  PIKE = 'pike',
+  PERCH = 'perch',
+  BASS = 'bass',
+  TROUT = 'trout',
 }
 
-export type FishingReadinessLevel = 'poor' | 'caution' | 'good';
+export type FishStabilityLevel = 'poor' | 'caution' | 'good';
 
-export type FishingReadinessMap = {
-  [key in FishSpecies]: FishingReadinessLevel;
+export type FishStabilityMap = {
+  [key in FishSpecies]: FishStabilityLevel;
 };

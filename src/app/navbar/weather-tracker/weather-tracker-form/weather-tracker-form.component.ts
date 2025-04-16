@@ -37,10 +37,10 @@ export class WeatherTrackerFormComponent implements OnInit {
   
     this.weatherService.getMultipleHistoricalWeather(location, 5).pipe(
       switchMap(() => this.weatherService.getCurrentWeather(location)),
-      switchMap(() => this.weatherService.getAllFishingReadiness())
+      switchMap(() => this.weatherService.getAllFishStability())
     ).subscribe({
-      next: (readinessBySpecies) => {
-        this.weatherService.fishReadiness.set(readinessBySpecies);
+      next: (stabilityBySpecies) => {
+        this.weatherService.fishStability.set(stabilityBySpecies)
         this.weatherService.loadingWeatherData.set(false);
         this.weatherService.displayWeatherData.set(true);
       },

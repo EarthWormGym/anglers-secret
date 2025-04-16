@@ -4,7 +4,7 @@ import { CurrentWeather } from '../models/current-weather';
 import { HistoricalWeather } from '../models/historical-weather';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { FishSpecies, FishingReadinessLevel, FishingReadinessMap } from '../models/fish.model';
+import { FishSpecies, FishStabilityLevel, FishStabilityMap } from '../models/fish.model';
 
 interface StabilityCriteria {
   tempThreshold: number;
@@ -37,7 +37,7 @@ export class WeatherTrackingService {
 
   loadingWeatherData = signal<boolean>(false);
   displayWeatherData = signal<boolean>(false);
-  fishReadiness = signal<FishingReadinessMap | null>(null);
+  fishStability = signal<FishStabilityMap | null>(null);
 
   private http = inject(HttpClient);
 
@@ -109,9 +109,8 @@ export class WeatherTrackingService {
   
     return scores;
   }
-  
-  
-  interpretStability(scores: number[]): FishingReadinessLevel {
+
+  interpretStability(scores: number[]): FishStabilityLevel {
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
   
     if (avg >= 3) return 'good';
@@ -119,7 +118,7 @@ export class WeatherTrackingService {
     return 'poor';
   }
 
-  getFishingReadiness(species: FishSpecies): Observable<FishingReadinessLevel> {
+  getFishStability(species: FishSpecies): Observable<FishStabilityLevel> {
     return this.historicalWeatherData$.pipe(
       map((history) => {
         if (history.length < 5) return 'caution';
@@ -129,14 +128,14 @@ export class WeatherTrackingService {
     );
   }
 
-  getAllFishingReadiness(): Observable<FishingReadinessMap> {
+  getAllFishStability(): Observable<FishStabilityMap> {
     return this.historicalWeatherData$.pipe(
       map((history) => {
-        const result: FishingReadinessMap = {
-          [FishSpecies.Pike]: 'caution',
-          [FishSpecies.Perch]: 'caution',
-          [FishSpecies.Bass]: 'caution',
-          [FishSpecies.Trout]: 'caution',
+        const result: FishStabilityMap = {
+          [FishSpecies.PIKE]: 'caution',
+          [FishSpecies.PERCH]: 'caution',
+          [FishSpecies.BASS]: 'caution',
+          [FishSpecies.TROUT]: 'caution',
         };
   
         if (history.length < 5) return result;

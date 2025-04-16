@@ -35,25 +35,25 @@
         </div>
       </div>
     }
-    @if (this.weatherTrackerService.fishReadiness()) {
-      <div class="card">
+    @if (this.weatherTrackerService.fishStability()) {
+      <div class="card fish-stability-card">
         <header class="card-header">
-          <p class="card-header-title">Fish Stability</p>
+          <p class="card-header-title fish-stability-header">Fish Stability</p>
         </header>
 
         <div class="card-content">
           <div class="content">
             <p>
-              {{ 'Pike - ' + this.weatherTrackerService.fishReadiness()?.pike }}
+              {{ 'Pike - ' + this.weatherTrackerService.fishStability()?.pike }}
             </p>
             <p>
-              {{ 'Perch - ' + this.weatherTrackerService.fishReadiness()?.perch }}
+              {{ 'Perch - ' + this.weatherTrackerService.fishStability()?.perch }}
             </p>
             <p>
-              {{ 'Trout - ' + this.weatherTrackerService.fishReadiness()?.trout }}
+              {{ 'Trout - ' + this.weatherTrackerService.fishStability()?.trout }}
             </p>
             <p>
-              {{ 'Bass - ' + this.weatherTrackerService.fishReadiness()?.bass }}
+              {{ 'Bass - ' + this.weatherTrackerService.fishStability()?.bass }}
             </p>
           </div>
         </div>
