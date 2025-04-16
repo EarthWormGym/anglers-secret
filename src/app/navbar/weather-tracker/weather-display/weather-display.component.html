@@ -43,18 +43,30 @@
 
         <div class="card-content">
           <div class="content">
-            <p>
-              {{ 'Pike - ' + this.weatherTrackerService.fishStability()?.pike }}
-            </p>
-            <p>
-              {{ 'Perch - ' + this.weatherTrackerService.fishStability()?.perch }}
-            </p>
-            <p>
-              {{ 'Trout - ' + this.weatherTrackerService.fishStability()?.trout }}
-            </p>
-            <p>
-              {{ 'Bass - ' + this.weatherTrackerService.fishStability()?.bass }}
-            </p>
+            <div class="fish-content">
+              <img src="../../assets/pike-icon.png"/>
+              <span class="fish-name">
+                {{ 'Pike - ' + this.weatherTrackerService.fishStability()?.pike }}
+              </span>
+            </div>
+            <div class="fish-content">
+              <img src="../../assets/perch-icon.png"/>
+              <span class="fish-name">
+                {{ 'Perch - ' + this.weatherTrackerService.fishStability()?.perch }}
+              </span>
+            </div>
+            <div class="fish-content">
+              <img src="../../assets/trout-icon.png"/>
+              <span class="fish-name">
+                {{ 'Trout - ' + this.weatherTrackerService.fishStability()?.trout }}
+              </span>
+            </div>
+            <div class="fish-content">
+              <img src="../../assets/bass-icon.png"/>
+              <span class="fish-name">
+                {{ 'Bass - ' + this.weatherTrackerService.fishStability()?.bass }}
+              </span>
+            </div>
           </div>
         </div>
       </div>

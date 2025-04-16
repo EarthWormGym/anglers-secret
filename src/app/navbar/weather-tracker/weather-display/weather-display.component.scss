@@ -15,4 +15,15 @@
   .fish-stability-header {
     justify-content: center;
   }
+  .fish-content {
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 300px;
+    gap: 20px;
+    img {
+      height: 60px;
+      width: 60px;
+    }
+  }
 }
