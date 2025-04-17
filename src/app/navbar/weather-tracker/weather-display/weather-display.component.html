@@ -35,7 +35,7 @@
         </div>
       </div>
     }
-    @if (this.weatherTrackerService.fishStability()) {
+    @if (this.fishStabilityService.fishStability()) {
       <div class="card fish-stability-card">
         <header class="card-header">
           <p class="card-header-title fish-stability-header">Fish Stability</p>
@@ -47,9 +47,9 @@
               <img src="../../assets/pike-icon.png"/>
               <span
                 class="fish-name"
-                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.pike"
+                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.pike"
               >
-                Pike {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.pike || 'caution') }}
+                Pike {{ getStabilityLabel(this.fishStabilityService.fishStability()?.pike || 'caution') }}
               </span>
             </div>
             
@@ -57,9 +57,9 @@
               <img src="../../assets/perch-icon.png"/>
               <span
                 class="fish-name"
-                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.perch"
+                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.perch"
               >
-                Perch {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.perch || 'caution') }}
+                Perch {{ getStabilityLabel(this.fishStabilityService.fishStability()?.perch || 'caution') }}
               </span>
             </div>
             
@@ -67,9 +67,9 @@
               <img src="../../assets/trout-icon.png"/>
               <span
                 class="fish-name"
-                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.trout"
+                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.trout"
               >
-                Trout {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.trout || 'caution') }}
+                Trout {{ getStabilityLabel(this.fishStabilityService.fishStability()?.trout || 'caution') }}
               </span>
             </div>
             
@@ -77,9 +77,9 @@
               <img src="../../assets/bass-icon.png"/>
               <span
                 class="fish-name"
-                [ngClass]="'stability-' + this.weatherTrackerService.fishStability()?.bass"
+                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.bass"
               >
-                Bass {{ getStabilityLabel(this.weatherTrackerService.fishStability()?.bass || 'caution') }}
+                Bass {{ getStabilityLabel(this.fishStabilityService.fishStability()?.bass || 'caution') }}
               </span>
             </div>
             

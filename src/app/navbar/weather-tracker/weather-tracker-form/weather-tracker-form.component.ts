@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { switchMap } from 'rxjs';
+import { FishStabilityService } from '../services/fish-stability.service';
 
 @Component({
     selector: 'app-weather-tracker-form',
@@ -15,6 +16,7 @@ export class WeatherTrackerFormComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private weatherService = inject(WeatherTrackingService);
+  private fishStabilityService = inject(FishStabilityService);
 
   weatherTrackerForm: FormGroup = new FormGroup({});
   locationControl: FormControl = new FormControl('', Validators.required);
@@ -37,10 +39,10 @@ export class WeatherTrackerFormComponent implements OnInit {
   
     this.weatherService.getMultipleHistoricalWeather(location, 5).pipe(
       switchMap(() => this.weatherService.getCurrentWeather(location)),
-      switchMap(() => this.weatherService.getAllFishStability())
+      switchMap(() => this.fishStabilityService.getAllFishStability())
     ).subscribe({
       next: (stabilityBySpecies) => {
-        this.weatherService.fishStability.set(stabilityBySpecies)
+        this.fishStabilityService.fishStability.set(stabilityBySpecies)
         this.weatherService.loadingWeatherData.set(false);
         this.weatherService.displayWeatherData.set(true);
       },

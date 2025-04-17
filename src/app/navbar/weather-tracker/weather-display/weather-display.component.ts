@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
+import { FishStabilityService } from '../services/fish-stability.service';
 
 @Component({
     selector: 'app-weather-display',
@@ -16,6 +17,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 export class WeatherDisplayComponent {
 
   public weatherTrackerService = inject(WeatherTrackingService);
+  public fishStabilityService = inject(FishStabilityService);
 
   getStabilityLabel(status: 'good' | 'caution' | 'poor'): string {
     switch (status) {
