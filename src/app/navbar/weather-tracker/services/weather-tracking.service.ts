@@ -114,7 +114,7 @@ export class WeatherTrackingService {
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
   
     if (avg >= 3) return 'good';
-    if (avg === 2) return 'caution';
+    if (avg >= 1.5 && avg < 3) return 'caution';
     return 'poor';
   }
 
