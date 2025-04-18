@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FishDisplayItem } from './models/fish-display-item';
+import { FishDisplayItem, fishList } from './models/fish-display-item.model';
 
 @Component({
   selector: 'app-fish-favourites',
@@ -10,22 +10,9 @@ import { FishDisplayItem } from './models/fish-display-item';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FishFavouritesComponent implements OnInit {
-  
-  fishList: FishDisplayItem[] = [
-    { name: 'Pike', image: 'pike-icon.png' },
-    { name: 'Perch', image: 'perch-icon.png' },
-    { name: 'Trout', image: 'trout-icon.png' },
-    { name: 'Bass', image: 'bass-icon.png' },
-    { name: 'Common Carp', image: 'common-carp-icon.png' },
-    { name: 'Mirror Carp', image: 'mirror-carp-icon.png' },
-    { name: 'Barbel', image: 'barbel-icon.png' },
-    { name: 'Salmon', image: 'salmon-icon.png' },
-    { name: 'Catfish', image: 'catfish-icon.png' },
-    { name: 'Chubb', image: 'chubb-icon.png' },
-    { name: 'Sturgeon', image: 'sturgeon-icon.png' },
-    { name: 'Zander', image: 'zander-icon.png' },
-  ];
 
+  fishList: FishDisplayItem[] = fishList;
+  
   ngOnInit(): void {
     
   }
