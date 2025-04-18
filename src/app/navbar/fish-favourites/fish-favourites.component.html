@@ -5,54 +5,12 @@
     </header>
 
     <div class="card-content">
-      <div class="content">
-        <div>
-          <img src="../../assets/pike-icon.png"/>
-        </div>
-        
-        <div>
-          <img src="../../assets/perch-icon.png"/>
-        </div>
-        
-        <div>
-          <img src="../../assets/trout-icon.png"/>
-        </div>
-        
-        <div>
-          <img src="../../assets/bass-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/common-carp-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/mirror-carp-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/barbel-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/salmon-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/catfish-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/chubb-icon.png"/>
-        </div>
-
-        <div>
-          <img src="../../assets/sturgeon-icon.png"/>
-        </div>
-      
-        <div>
-          <img src="../../assets/zander-icon.png"/>
-        </div>
+      <div class="content fish-icons-grid">
+        @for (fish of fishList; track fish.name) {
+          <div>
+            <img [src]="'../../assets/' + fish.image" [alt]="fish.name" [title]="fish.name" />
+          </div>
+        }
       </div>
     </div>
   </div>
