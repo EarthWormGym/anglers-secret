@@ -6,12 +6,22 @@
 
     <div class="card-content">
       <div class="content fish-icons-grid">
-        @for (fish of fishList; track fish.name) {
-          <div>
-            <img [src]="'../../assets/' + fish.image" [alt]="fish.name" [title]="fish.name" />
-          </div>
-        }
+        <label for="fishSelect">Select up to 4 fish:</label>
+        <select id="fishSelect" multiple [formControl]="fishSelectControl">
+          @for (fish of fishList; track fish.name) {
+            <div class="fish-entry">
+              <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
+              <span class="fish-name">{{ fish.name }}</span>
+            </div>
+          }
+        </select>
       </div>
     </div>
+
+    @if (selectedFish.length === maxSelection) {
+      <p class="limit-warning">
+        You've selected the maximum of 4 fish.
+      </p>
+    }
   </div>
 </div>

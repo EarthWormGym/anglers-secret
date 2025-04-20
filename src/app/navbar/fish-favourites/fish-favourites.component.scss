@@ -1,4 +1,46 @@
-img {
-  height: 60px;
-  width: 60px;
+.fish-favourites-container {
+  .fish-icons-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: center;
+    justify-items: start;
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .fish-entry {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .fish-name {
+    font-weight: bold;
+    font-size: 1.05rem;
+    color: #333;
+  }
+  
+
+  img {
+    height: 60px;
+    width: 60px;
+  }
 }
+
+select[multiple] {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.limit-warning {
+  color: #c62828;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
