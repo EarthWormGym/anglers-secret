@@ -5,23 +5,27 @@
     </header>
 
     <div class="card-content">
-      <div class="content fish-icons-grid">
-        <label for="fishSelect">Select up to 4 fish:</label>
-        <select id="fishSelect" multiple [formControl]="fishSelectControl">
-          @for (fish of fishList; track fish.name) {
+      <mat-selection-list>
+        @for (fish of fishList; track fish.name) {
+          <mat-list-option
+            [value]="fish.name"
+            [selected]="isSelected(fish.name)"
+            [disabled]="isDisabled(fish.name)"
+            (click)="toggleSelection(fish.name)"
+          >
             <div class="fish-entry">
               <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
               <span class="fish-name">{{ fish.name }}</span>
             </div>
-          }
-        </select>
-      </div>
-    </div>
+          </mat-list-option>
+        }
+      </mat-selection-list>
 
-    @if (selectedFish.length === maxSelection) {
-      <p class="limit-warning">
-        You've selected the maximum of 4 fish.
-      </p>
-    }
+      @if (selectedFish.length === maxSelection) {
+        <p class="limit-warning">
+          You've selected the maximum of 4 fish.
+        </p>
+      }
+    </div>
   </div>
 </div>

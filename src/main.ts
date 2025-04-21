@@ -8,6 +8,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 bootstrapApplication(AppComponent, {
     providers: [
@@ -16,7 +17,7 @@ bootstrapApplication(AppComponent, {
         LoginService, 
         provideHttpClient(withInterceptorsFromDi()),
         provideAnimations(),
-        provideRouter(APP_ROUTES, withHashLocation())
+        provideRouter(APP_ROUTES, withHashLocation()), provideAnimationsAsync()
     ]
 })
   .catch((err) => console.error(err));
