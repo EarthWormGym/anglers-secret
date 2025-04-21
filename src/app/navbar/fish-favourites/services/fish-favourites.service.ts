@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
+import { FishDisplayItem } from '../models/fish-display-item.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FishFavouritesService {
 
-  constructor() { }
+  selectedFish = signal<FishDisplayItem[]>([]);
+
 }

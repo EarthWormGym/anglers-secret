@@ -8,10 +8,10 @@
       <mat-selection-list>
         @for (fish of fishList; track fish.name) {
           <mat-list-option
-            [value]="fish.name"
-            [selected]="isSelected(fish.name)"
-            [disabled]="isDisabled(fish.name)"
-            (click)="toggleSelection(fish.name)"
+            [value]="fish"
+            [selected]="isSelected(fish)"
+            [disabled]="isDisabled(fish)"
+            (click)="toggleSelection(fish)"
           >
             <div class="fish-entry">
               <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />

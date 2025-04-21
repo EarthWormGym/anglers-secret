@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FishDisplayItem, fishList } from './models/fish-display-item.model';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatListModule } from '@angular/material/list';
+import { FishFavouritesService } from './services/fish-favourites.service';
 
 @Component({
   selector: 'app-fish-favourites',
@@ -16,24 +17,28 @@ import { MatListModule } from '@angular/material/list';
 })
 export class FishFavouritesComponent {
 
+  fishFavouritesService = inject(FishFavouritesService);
+  selectedFish = this.fishFavouritesService.selectedFish();
+
   fishList: FishDisplayItem[] = fishList;
-  selectedFish: string[] = [];
   maxSelection = 4;
 
-  toggleSelection(fish: string): void {
-    const index = this.selectedFish.indexOf(fish);
+  toggleSelection(fish: FishDisplayItem): void {
+    const index = this.selectedFish.findIndex(f => f.name === fish.name);
     if (index > -1) {
       this.selectedFish.splice(index, 1);
+      console.log(this.fishFavouritesService.selectedFish());
     } else if (this.selectedFish.length < this.maxSelection) {
       this.selectedFish.push(fish);
+      console.log(this.fishFavouritesService.selectedFish());
     }
   }
 
-  isSelected(fish: string): boolean {
-    return this.selectedFish.includes(fish);
+  isSelected(fish: FishDisplayItem): boolean {
+    return this.selectedFish.some(f => f.name === fish.name);
   }
-
-  isDisabled(fish: string): boolean {
+  
+  isDisabled(fish: FishDisplayItem): boolean {
     return !this.isSelected(fish) && this.selectedFish.length >= this.maxSelection;
   }
 
