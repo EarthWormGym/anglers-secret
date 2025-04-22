@@ -2,6 +2,9 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { WeatherTrackingService } from '../services/weather-tracking.service';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { FishStabilityService } from '../services/fish-stability.service';
+import { FishDisplayItem } from '../../fish-favourites/models/fish-display-item.model';
+import { FishFavouritesService } from '../../fish-favourites/services/fish-favourites.service';
+import { FishSpecies } from '../models/fish.model';
 
 @Component({
     selector: 'app-weather-display',
@@ -18,18 +21,25 @@ export class WeatherDisplayComponent {
 
   public weatherTrackerService = inject(WeatherTrackingService);
   public fishStabilityService = inject(FishStabilityService);
+  public fishFavouritesService = inject(FishFavouritesService);
+
+  fishList: FishDisplayItem[] = this.fishFavouritesService.selectedFish();
 
   getStabilityLabel(status: 'good' | 'caution' | 'poor'): string {
     switch (status) {
       case 'good':
-        return '- Biting';
+        return ' - Biting';
       case 'caution':
-        return '- Cautious';
+        return ' - Cautious';
       case 'poor':
-        return '- Inactive';
+        return ' - Inactive';
       default:
         return '';
     }
+  }
+
+  mapFishNameToSpecies(name: string): FishSpecies {
+    return FishSpecies[name.replace(' ', '') as keyof typeof FishSpecies];
   }
 
   onBack() {

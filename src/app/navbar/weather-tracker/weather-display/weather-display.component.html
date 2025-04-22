@@ -43,46 +43,17 @@
 
         <div class="card-content fish-content-container">
           <div class="content">
-            <div class="fish-content">
-              <img src="../../assets/pike-icon.png"/>
-              <span
-                class="fish-name"
-                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.pike"
-              >
-                Pike {{ getStabilityLabel(this.fishStabilityService.fishStability()?.pike || 'caution') }}
-              </span>
-            </div>
-            
-            <div class="fish-content">
-              <img src="../../assets/perch-icon.png"/>
-              <span
-                class="fish-name"
-                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.perch"
-              >
-                Perch {{ getStabilityLabel(this.fishStabilityService.fishStability()?.perch || 'caution') }}
-              </span>
-            </div>
-            
-            <div class="fish-content">
-              <img src="../../assets/trout-icon.png"/>
-              <span
-                class="fish-name"
-                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.trout"
-              >
-                Trout {{ getStabilityLabel(this.fishStabilityService.fishStability()?.trout || 'caution') }}
-              </span>
-            </div>
-            
-            <div class="fish-content">
-              <img src="../../assets/bass-icon.png"/>
-              <span
-                class="fish-name"
-                [ngClass]="'stability-' + this.fishStabilityService.fishStability()?.bass"
-              >
-                Bass {{ getStabilityLabel(this.fishStabilityService.fishStability()?.bass || 'caution') }}
-              </span>
-            </div>
-            
+            @for (fish of fishList; track fish.name) {
+              <div class="fish-content">
+                <img [src]="'../../assets/' + fish.image" [alt]="fish.name" />
+                <span
+                  class="fish-name"
+                  [ngClass]="'stability-' + (fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution')"
+                >
+                  {{ fish.name + getStabilityLabel(fishStabilityService.fishStability()?.[mapFishNameToSpecies(fish.name)] || 'caution') }}
+                </span>
+              </div>
+            }
           </div>
         </div>
       </div>
