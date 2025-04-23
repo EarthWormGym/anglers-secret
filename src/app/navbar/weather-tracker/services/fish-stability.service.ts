@@ -73,7 +73,16 @@ export class FishStabilityService {
           [FishSpecies.PERCH]: 'caution',
           [FishSpecies.BASS]: 'caution',
           [FishSpecies.TROUT]: 'caution',
+          [FishSpecies.COMMON_CARP]: 'caution',
+          [FishSpecies.MIRROR_CARP]: 'caution',
+          [FishSpecies.BARBEL]: 'caution',
+          [FishSpecies.SALMON]: 'caution',
+          [FishSpecies.CATFISH]: 'caution',
+          [FishSpecies.CHUBB]: 'caution',
+          [FishSpecies.STURGEON]: 'caution',
+          [FishSpecies.ZANDER]: 'caution',
         };
+        
 
         if (history.length < 5) return result;
 
