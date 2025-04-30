@@ -39,8 +39,11 @@ export class WeatherDisplayComponent {
   }
 
   mapFishNameToSpecies(name: string): FishSpecies {
-    return FishSpecies[name.replace(' ', '') as keyof typeof FishSpecies];
+    const key = name.replace(/\s+/g, '_').toUpperCase();
+    const species = FishSpecies[key as keyof typeof FishSpecies];
+    return species;
   }
+  
 
   onBack() {
     window.location.reload();

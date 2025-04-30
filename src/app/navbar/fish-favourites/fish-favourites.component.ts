@@ -27,10 +27,8 @@ export class FishFavouritesComponent {
     const index = this.selectedFish.findIndex(f => f.name === fish.name);
     if (index > -1) {
       this.selectedFish.splice(index, 1);
-      console.log(this.fishFavouritesService.selectedFish());
     } else if (this.selectedFish.length < this.maxSelection) {
       this.selectedFish.push(fish);
-      console.log(this.fishFavouritesService.selectedFish());
     }
   }
 
