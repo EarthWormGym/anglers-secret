@@ -16,7 +16,7 @@ export class WeatherTrackingService {
   private currentWeatherDataSubject = new BehaviorSubject<CurrentWeather | null>(null);
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
 
-  private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
+  public historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
   loadingWeatherData = signal<boolean>(false);

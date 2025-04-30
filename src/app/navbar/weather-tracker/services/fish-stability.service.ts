@@ -18,40 +18,50 @@ export class FishStabilityService {
     history: HistoricalWeather[],
     species: FishSpecies
   ): number[] {
-    const crit = stabilityCriteriaMap[species];
+    const { thresholds, weights } = stabilityCriteriaMap[species];
     const scores: number[] = [];
-
+  
     for (let i = 0; i < history.length - 1; i++) {
       const today = history[i].data.historicalWeather;
       const yesterday = history[i + 1].data.historicalWeather;
-
+  
       let score = 0;
-
+  
       const tempDelta = Math.abs(today.tempC - yesterday.tempC);
-      if (tempDelta <= crit.tempThreshold) score++;
-
+      if (tempDelta <= thresholds.tempThreshold) {
+        score += weights.temp;
+      }
+  
       const windDelta = Math.abs(today.midday.windMph - yesterday.midday.windMph);
-      if (windDelta <= crit.windThreshold) score++;
-
-      if (today.totalPrecipMm <= crit.rainThreshold) score++;
-
+      if (windDelta <= thresholds.windThreshold) {
+        score += weights.wind;
+      }
+  
+      if (today.totalPrecipMm <= thresholds.rainThreshold) {
+        score += weights.rain;
+      }
+  
       const cloudDelta = Math.abs(today.midday.cloudCover - yesterday.midday.cloudCover);
-      if (cloudDelta <= crit.cloudThreshold) score++;
-
+      if (cloudDelta <= thresholds.cloudThreshold) {
+        score += weights.cloud;
+      }
+  
       const uvDelta = Math.abs(today.uv - yesterday.uv);
-      if (uvDelta <= crit.uvThreshold) score++;
-
+      if (uvDelta <= thresholds.uvThreshold) {
+        score += weights.uv;
+      }
+  
       scores.push(score);
     }
-
+  
     return scores;
   }
 
   interpretStability(scores: number[]): FishStabilityLevel {
     const avg = scores.reduce((a, b) => a + b, 0) / scores.length;
-
-    if (avg >= 3) return 'good';
-    if (avg >= 1.5 && avg < 3) return 'caution';
+  
+    if (avg >= 0.75) return 'good';
+    if (avg >= 0.4) return 'caution';
     return 'poor';
   }
 
