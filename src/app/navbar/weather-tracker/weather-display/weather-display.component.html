@@ -5,7 +5,7 @@
     </button>
   </div>
   <div class="container">
-    @if (weatherTrackerService.currentWeatherData$ | async; as weatherData) {
+    @if (weatherTrackingService.currentWeatherData$ | async; as weatherData) {
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">{{ weatherData.data.location.name }}</p>
@@ -62,7 +62,7 @@
   </div>
 
   <div class="container">
-    @if (weatherTrackerService.historicalWeatherData$ | async; as weatherDataArray) {
+    @if (weatherTrackingService.historicalWeatherData$ | async; as weatherDataArray) {
       @for (weatherData of weatherDataArray; track weatherData.weatherId) {
         <div class="card">
           <header class="card-header">

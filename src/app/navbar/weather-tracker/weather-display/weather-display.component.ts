@@ -19,7 +19,7 @@ import { FishSpecies } from '../models/fish.model';
 })
 export class WeatherDisplayComponent {
 
-  public weatherTrackerService = inject(WeatherTrackingService);
+  public weatherTrackingService = inject(WeatherTrackingService);
   public fishStabilityService = inject(FishStabilityService);
   public fishFavouritesService = inject(FishFavouritesService);
 
@@ -46,7 +46,8 @@ export class WeatherDisplayComponent {
   
 
   onBack() {
-    window.location.reload();
+    this.weatherTrackingService.clearHistoricalWeatherData();
+    this.weatherTrackingService.displayWeatherData.set(false);
   }
 
 }

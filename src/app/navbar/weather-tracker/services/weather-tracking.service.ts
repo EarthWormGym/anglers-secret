@@ -16,7 +16,7 @@ export class WeatherTrackingService {
   private currentWeatherDataSubject = new BehaviorSubject<CurrentWeather | null>(null);
   currentWeatherData$ = this.currentWeatherDataSubject.asObservable();
 
-  public historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
+  private historicalWeatherDataSubject = new BehaviorSubject<HistoricalWeather[]>([]);
   historicalWeatherData$ = this.historicalWeatherDataSubject.asObservable();
 
   loadingWeatherData = signal<boolean>(false);
@@ -58,6 +58,10 @@ export class WeatherTrackingService {
     return this.http.get<any>(WeatherTrackingService.HISTORICAL_WEATHER_PATH, { params }).pipe(
       map((requestData) => new HistoricalWeather(requestData))
     );
+  }
+
+  clearHistoricalWeatherData() {
+    this.historicalWeatherDataSubject.next([]);
   }
 
 }
